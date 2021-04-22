@@ -1,0 +1,49 @@
+﻿<Window x:Class="PesajeWPF.frmLicencia"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PesajeWPF"
+        mc:Ignorable="d" FontFamily="Tahoma" FontSize="18"
+        WindowStyle="None" WindowState="Maximized" WindowStartupLocation="CenterScreen"
+        Title="frmLicencia" Height="450" Width="400" Loaded="Window_Loaded">
+    <Viewbox Stretch="Uniform" >
+        <Grid Height="450" Width="400">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="105" />
+            </Grid.RowDefinitions>
+            <Label Content="Equipo:" Margin="5"></Label>
+            <Label Content="HOSTNAME" Margin="5" x:Name="lblEquipo" Grid.Column="1"></Label>
+            <Label Content="IP:" Margin="5" Grid.Row="1"></Label>
+            <Label Content="000.000.000.000" Margin="5" x:Name="lblIP" Grid.Row="1" Grid.Column="1"></Label>
+            <Label Content="Licencia:" Margin="5" Grid.Row="2"></Label>
+            <Grid Grid.Row="2" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="50" x:Name="pnlMensaje"  />
+                </Grid.RowDefinitions>
+                <TextBox x:Name="txtLicencia" Margin="5" TextWrapping="Wrap"></TextBox>
+                <Border Padding="0" Grid.Row="1" Background="red" Margin="5,0,5,0" CornerRadius="2">
+                    <Label x:Name="lblMensaje" Content="Error" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Foreground="white"></Label>
+                </Border>
+            </Grid>
+            <StackPanel Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnGuardar" Content="Guardar Licencia" Margin="10" Padding="10,30" Click="btnGuardar_Click"></Button>
+                    <Button x:Name="btnCerrar" Content="Cerrar" Margin="10" Padding="10,30" Grid.Column="1" Click="btnCerrar_Click"></Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
+</Window>

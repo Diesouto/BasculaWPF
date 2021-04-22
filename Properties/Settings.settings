@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PesajeWPF.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Puerto" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">COM3</Value>
+    </Setting>
+    <Setting Name="ConexionBBDD" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Data Source=.;initial catalog=PesajeWpf;user Id=pesaje;password=pesaje</Value>
+    </Setting>
+    <Setting Name="DirectorioEtiquetas" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Users\Diego.SISCOM\Documents\Proyectos\Percebeiro\Etiquetas</Value>
+    </Setting>
+    <Setting Name="PesoMinimoPesada" Type="System.Decimal" Scope="Application">
+      <Value Profile="(Default)">0.1</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,110 @@
+﻿<Window x:Class="PesajeWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:PesajeWPF" FontSize="10"
+        mc:Ignorable="d" WindowState="Maximized" WindowStyle="None"
+        Title="Pesaje" Height="600" Width="800" Loaded="Window_Loaded">
+    <Viewbox Stretch="Uniform" x:Name="vbTrabajo">
+        <Grid Margin="0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400" />
+                <ColumnDefinition Width="400" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="460" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <Label Content="Trabajo" FontWeight="Bold" FontSize="18" Margin="0,5,5,5"></Label>
+                <Button Width="40" HorizontalAlignment="Left" Padding="0" Margin="0,3,0,3">
+                    <fa:FontAwesome Icon="ListUl" x:Name="faList" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" FontSize="18"></fa:FontAwesome>
+                </Button>
+                <Label x:Name="lblTrabajo" FontSize="18" Content="999.999" Margin="5,5,0,5"></Label>
+            </StackPanel>
+            <Button x:Name="btnExpand" Margin="2,2,3,2" Grid.Column="1" HorizontalAlignment="Right" Width="40" Padding="0" Click="btnExpand_Click">
+                <fa:FontAwesome Icon="Expand" x:Name="faExpand" Margin="0" FontSize="18"></fa:FontAwesome>
+            </Button>
+
+            <Button Grid.Column="0" Grid.Row="1" Content="INICIAR TRABAJO" Margin="2" FontSize="30"></Button>
+            <Button Grid.Column="1" Grid.Row="1" Content="FINALIZAR TRABAJO" Margin="2" FontSize="30"></Button>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="2" FontSize="24" Margin="2">
+                <ListView Name="lvPesos">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Caja" Width="100" DisplayMemberBinding="{Binding NumeroCaja}"></GridViewColumn>
+                            <GridViewColumn Header="Peso" Width="250" DisplayMemberBinding="{Binding Peso}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Peso}" TextAlignment="Right"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                                <GridViewColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="Peso" TextAlignment="Right"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.HeaderTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+
+            <Button Grid.Column="0" Grid.Row="3" Content="ELIMINAR CAJA" Margin="2" FontSize="20" Padding="0"></Button>
+
+            <Grid Grid.Row="2" Grid.Column="1" Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="80" />
+                </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.Row="0" Margin="2">
+                <TextBlock FontSize="50" FontFamily="Tahoma" Height="80" Background="Black" Foreground="White" TextAlignment="Right" Padding="10,5,20,5">#.###,###</TextBlock>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <TextBlock x:Name="lblCOM" Margin="0,0,10,0" Foreground="Red" Visibility="Collapsed">El puerto COMX no existe</TextBlock>
+                        <Rectangle x:Name="imgCOM" Width="20" Height="10" Margin="0,2,0,5" Fill="Red" HorizontalAlignment="Right"></Rectangle>
+                    </StackPanel>
+                <GroupBox Header="Datos de Configuración" BorderBrush="Black" BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" FontSize="20" FontWeight="DemiBold" >Fecha:</Label>
+                        <Label Grid.Row="0" Grid.Column="1" FontSize="20" x:Name="lblFecha">01/01/9999</Label>
+                        <Label Grid.Row="1" Grid.Column="0" FontSize="20" FontWeight="DemiBold" >Lote:</Label>
+                        <Label Grid.Row="1" Grid.Column="1" FontSize="20" x:Name="lblLote">L9999001</Label>
+                        <Label Grid.Row="2" Grid.Column="0" FontSize="20" FontWeight="DemiBold" >Etiqueta:</Label>
+                        <Label Grid.Row="2" Grid.Column="1" FontSize="20" x:Name="lblEtiqueta">asdf asdfasdf asdfa.btw</Label>
+                    </Grid>
+                </GroupBox>
+                <CheckBox x:Name="chkImprimirAutomaticamente" Content="Imprimir automáticamente al guardar el peso" FontSize="12" Margin="5,10,0,0" IsChecked="True"></CheckBox>
+            </StackPanel>
+                <Grid Margin="0,0,0,0" Grid.Row="1">
+                    <Button x:Name="btnImprimir" Width="80" Height="80" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btnImprimir_Click">
+                        <StackPanel>
+                            <fa:FontAwesome Icon="Print" FontSize="40" Height="40" Margin="0" Padding="0"></fa:FontAwesome>
+                            <Label FontSize="18" Margin="0" Padding="0">Imprimir</Label>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="btnSalir" Width="80" Height="80" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="btnSalir_Click">
+                        <StackPanel>
+                            <fa:FontAwesome Icon="Close" FontSize="40" Height="40" Margin="0" Padding="0" Foreground="Red"></fa:FontAwesome>
+                            <Label FontSize="18" Margin="0" Padding="0">S A L I R</Label>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Viewbox>
+</Window>

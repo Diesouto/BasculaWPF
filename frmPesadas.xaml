@@ -1,0 +1,255 @@
+﻿<Window x:Class="PesajeWPF.frmPesadas"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:PesajeWPF"
+        mc:Ignorable="d" FontFamily="Tahoma"
+        Loaded="Window_Loaded" Closing="Window_Closing"
+        Title="Pesadas" Height="666" Width="1200" WindowStyle="None" WindowState="Maximized" WindowStartupLocation="CenterScreen">
+    <Viewbox Stretch="Fill">
+        <StackPanel Background="LightGray">
+            <Grid Height="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnListado" Content="LISTADO" Margin="5,10,5,10" Click="btnListado_Click"></Button>
+                <Button x:Name="btnCerrar" Grid.Column="2" Content="CERRAR" Margin="5,10,5,10" Click="btnCerrar_Click"></Button>
+                <TextBlock Width="1000" Grid.Column="1" Background="Black" Margin="0,10,0,10" TextAlignment="Center" VerticalAlignment="Center">
+                <Label x:Name="lblPeso" Content="0,000" FontFamily="Courier New" FontSize="70" Foreground="White" ></Label>
+                </TextBlock>
+            </Grid>
+            <Grid Height="566">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="350" />
+                    <ColumnDefinition Width="300" />
+                </Grid.ColumnDefinitions>
+                <!-- PRODUCTOS -->
+                <Grid x:Name="gridProductos" Margin="5,0,0,5" Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="84" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Background="Cyan">
+                        <Label HorizontalAlignment="Center" FontSize="20">PRODUCTOS</Label>
+                        <Line Fill="black" Margin="0,3,0,5" X1="0" X2="350" StrokeThickness="2" Stroke="Black"></Line>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Background="Cyan">
+                        <Label FontWeight="Bold" Content="Etiqueta:"></Label>
+                        <Label x:Name="lblEtiquetaProducto" Content=""></Label>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Background="Cyan">
+                        <Label FontWeight="Bold" Content="Impresora:"></Label>
+                        <Label x:Name="lblImpresoraProducto"></Label>
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Background="Cyan">
+                        <Label FontWeight="Bold" Content="Copias:"></Label>
+                        <Label x:Name="lblCopiasProducto"></Label>
+                    </StackPanel>
+                    <ListView Grid.Row="4" x:Name="lvProdutos" Margin="0,5,0,5" ItemsSource="{Binding oPesos}">
+                        <ListView.Resources>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="Padding" Value="0,10"></Setter>
+                                <Setter Property="FontSize" Value="20"></Setter>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="FontSize" Value="20" />
+                                <Setter Property="Height" Value="50" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Nº" Width="100" DisplayMemberBinding="{Binding Numero}" />
+                                <GridViewColumn Header="Peso" Width="180">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Peso, StringFormat=N3}" HorizontalAlignment="Right"></TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Grid Grid.Row="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnEliminaProducto" Grid.Column="0" FontSize="18" Margin="2,0,2,0" Click="btnEliminaProducto_Click">
+                            <StackPanel>
+                                <fa:FontAwesome Icon="Remove" FontSize="40" Height="40" Margin="0" Foreground="Red" Padding="0"></fa:FontAwesome>
+                                <Label Content="Elimina Producto"></Label>
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="btnReimprimeProducto" Grid.Column="1" FontSize="18" Margin="2,0,2,0" Click="btnReimprimeProducto_Click">
+                            <StackPanel>
+                                <fa:FontAwesome Icon="Print" FontSize="40" Height="40" Margin="0" Padding="0"></fa:FontAwesome>
+                                <Label Content="Reimprime Etiqueta"></Label>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+                <!-- PANEL CENTRAL  -->
+                <Grid Grid.Column="1" HorizontalAlignment="Center" Background="LightGray" Width="200">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150" />
+                        <RowDefinition Height="90" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="Gray" Background="white" Margin="25,30,25,30" BorderThickness="2" CornerRadius="5">
+                        <StackPanel>
+                            <Label FontSize="18" Content="CAJA AUTO EN" HorizontalAlignment="Center"></Label>
+                            <Label FontSize="30" Content="0" HorizontalAlignment="Center" x:Name="lblCajaAutoEn"></Label>
+                        </StackPanel>
+                    </Border>
+                    <Button Grid.Row="1" Height="80" Margin="25,0,25,0" FontSize="16" Background="DarkOrange"
+                            x:Name="btnCierreManual" Click="btnCierreManual_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Cierre Manual"></Label>
+                            <fa:FontAwesome Icon="ChevronRight" Margin="5,0,0,0" Padding="0" VerticalAlignment="Center"></fa:FontAwesome>
+                        </StackPanel>
+                    </Button>
+                    <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Margin="10">
+                        <TextBlock x:Name="lblMensajes" Text="" TextWrapping="Wrap" Foreground="Red" TextAlignment="Center" Margin="0,0,0,20"></TextBlock>
+                        <Label x:Name="lblCOM" Content="Puerto COMX no encontrado" Foreground="Red" HorizontalAlignment="Center"></Label>
+                        <Border x:Name="COMBorder" HorizontalAlignment="Center" Margin="0,2,0,10" Width="25" Height="10" BorderThickness="1" BorderBrush="Black" Background="Red"></Border>
+                    </StackPanel>
+                </Grid>
+                <!-- CAJAS -->
+                <Grid x:Name="gridCajas" Grid.Column="2" Margin="0,0,0,5" Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="84" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Background="Yellow">
+                        <Label HorizontalAlignment="Center" FontSize="20" Content="CAJAS" Foreground="Black" Background="Transparent"></Label>
+                        <Line Fill="black" Margin="0,3,0,5" X1="0" X2="350" StrokeThickness="2" Stroke="Black"></Line>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Background="Yellow">
+                        <Label FontWeight="Bold" Content="Etiqueta:"></Label>
+                        <Label x:Name="lblEtiquetaCaja" Content=""></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Background="Yellow">
+                        <Label FontWeight="Bold" Content="Impresora"></Label>
+                        <Label x:Name="lblImpresoraCaja"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" Background="Yellow">
+                        <Label FontWeight="Bold" Content="Copias:"></Label>
+                        <Label x:Name="lblCopiasCaja"></Label>
+                    </StackPanel>
+                    <ListView x:Name="lvCajas" Grid.Row="4" Margin="0,5,0,5" ItemsSource="{Binding oPesosCajas}">
+                        <ListView.Resources>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="Padding" Value="0,10"></Setter>
+                                <Setter Property="FontSize" Value="20"></Setter>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="FontSize" Value="20" />
+                                <Setter Property="Height" Value="50" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Nº" Width="100" DisplayMemberBinding="{Binding Numero}" />
+                                <GridViewColumn Header="Peso" Width="180">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Peso, StringFormat=N3}" HorizontalAlignment="Right"></TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Grid Grid.Row="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" FontSize="18" Margin="2,0,2,0" x:Name="btnEliminaCaja" Click="btnEliminaCaja_Click">
+                            <StackPanel>
+                                <fa:FontAwesome Icon="Remove" FontSize="40" Foreground="Red"></fa:FontAwesome>
+                                <Label Content="Elimina Caja"></Label>
+                            </StackPanel>
+                        </Button>
+                        <Button Grid.Column="1" FontSize="18" Margin="2,0,2,0" x:Name="btnReimprimeEtiqueta" Click="btnReimprimeCaja_Click">
+                            <StackPanel>
+                                <fa:FontAwesome Icon="Print" FontSize="40"></fa:FontAwesome>
+                                <Label Content="Reimprime Etiqueta"></Label>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+                <StackPanel Grid.Column="3" Background="LightGray">
+                    <Button x:Name="btnIniciar" Content="INICIAR" FontSize="40" Height="100" Margin="10,30,10,10" Background="LightGreen" Click="btnIniciar_Click"></Button>
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="10" Background="White">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="LOTE:" FontSize="14" FontWeight="Bold" Padding="10"></Label>
+                            <Label Grid.Column="1" HorizontalAlignment="Right" x:Name="lblLote" Content="XXXXXXXXXX" FontSize="14" Padding="10"></Label>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="10" Background="White">
+                        <Grid>
+                            <Label Content="FECHA:" FontSize="14" FontWeight="Bold" Padding="10"></Label>
+                            <Label Grid.Column="1" HorizontalAlignment="Right" x:Name="lblFecha" Content="99/99/9999" FontSize="14" Padding="10"></Label>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="10" Background="White">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="PRODUCTOS:" FontSize="14" FontWeight="Bold" Padding="10"></Label>
+                            <Label Grid.Column="1" HorizontalAlignment="Right" x:Name="lblProductos" Content="000" FontSize="14" Padding="10"></Label>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="10" Background="White">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="CAJAS:" FontSize="14" FontWeight="Bold" Padding="10"></Label>
+                            <Label Grid.Column="1" HorizontalAlignment="Right" x:Name="lblCajas" Content="000" FontSize="14" Padding="10"></Label>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" Background="White" Margin="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Content="KILOS:" FontSize="14" FontWeight="Bold" Padding="10"></Label>
+                            <Label Grid.Column="1" HorizontalAlignment="Right" x:Name="lblKilos" Content="0,000" FontSize="14" Padding="10"></Label>
+                    </Grid>
+                    </Border>
+                    <Button x:Name="btnFinalizar" Content="FINALIZAR" FontSize="40" Margin="10,10,10,0" Height="100" Background="Red" Click="btnFinalizar_Click"></Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Viewbox>
+</Window>
